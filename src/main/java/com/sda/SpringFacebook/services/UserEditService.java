@@ -1,11 +1,9 @@
 package com.sda.SpringFacebook.services;
 
-import com.sda.SpringFacebook.model.User;
-import org.springframework.stereotype.Service;
+import com.sda.SpringFacebook.request.UpdateUserRequest;
 
-@Service
 public interface UserEditService {
 
-    void changeUserDataById (User userToChange);
+    void changeUserDataById (UpdateUserRequest request, String userId);
 
 }
