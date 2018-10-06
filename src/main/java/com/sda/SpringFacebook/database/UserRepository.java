@@ -9,8 +9,4 @@ public interface UserRepository extends MongoRepository<User, String> {
     Page<User> findAll(Pageable pageable);
 
     User findById (String id);
-
-    User findById(String id);
-
-    User findById(String id);
 }
