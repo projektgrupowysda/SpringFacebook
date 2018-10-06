@@ -1,7 +1,31 @@
 package com.sda.SpringFacebook.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.sda.SpringFacebook.model.Post;
+import com.sda.SpringFacebook.request.CreatePostRequest;
+import com.sda.SpringFacebook.services.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PostController {
+    private PostService postService;
+
+    @Autowired
+    public PostController(PostService postService){
+        this.postService = postService;
+    }
+
+    @PostMapping("/createPost")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPost(@RequestBody CreatePostRequest request){
+        postService.createPost(request);
+    }
+
+    @GetMapping("/viewAllPosts")
+    public List<Post> viewPosts(){
+        return postService.viewAllByUserId();
+    }
 }

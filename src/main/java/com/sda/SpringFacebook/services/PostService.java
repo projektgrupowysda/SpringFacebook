@@ -1,4 +1,4 @@
-package com.sda.SpringFacebook.service;
+package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.database.PostRepository;
 import com.sda.SpringFacebook.database.UserRepository;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -33,8 +34,17 @@ public class PostService {
                 .build();
 
         postRepository.save(post);
-
     }
+
+    public List<Post> viewAllByUserId(){
+        User user = getUserLoggedInFromRepository();
+
+        return postRepository.findAllByUserId(user.getId());
+    }
+
+
+
+
 
 
 
