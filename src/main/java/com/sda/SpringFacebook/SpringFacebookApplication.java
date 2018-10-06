@@ -6,10 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringFacebookApplication {
 
+	//porażka 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringFacebookApplication.class, args);
+//duza porażka
 
+		//najwieksza porażka
 
-		// Michał
+		//nwm co sie dzieje
+
+		//ostatni
+
 	}
 }
