@@ -11,6 +11,8 @@ public class SpringFacebookApplication {
 		SpringApplication.run(SpringFacebookApplication.class, args);
 //duza porażka
 
-		
+		//najwieksza porażka 
+
+
 	}
 }
