@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AddToFriendsImpl implements AddToFriendsService {
+public class FriendsImpl implements FriendsService {
 
     UserRepository userRepository;
 
     @Autowired
-    public AddToFriendsImpl(UserRepository userRepository) {
+    public FriendsImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -23,7 +23,7 @@ public class AddToFriendsImpl implements AddToFriendsService {
         User userByIdToAdd = userRepository.findById(userToAddId);
         User user = userRepository.findById(userId);
 
-        if(userByIdToAdd == null || user == null){
+        if (userByIdToAdd == null || user == null) {
 
             throw new RuntimeException("Nie ma takiego użytkownika");
         }
@@ -38,4 +38,19 @@ public class AddToFriendsImpl implements AddToFriendsService {
 
         userRepository.save(userByIdToAdd);
     }
+
+    @Override
+    public List<User> getAllFriends(String id) {
+
+        User user = userRepository.findById(id);
+
+        if(user == null){
+
+            throw new RuntimeException("Brak użytkownika");
+        }
+
+        return user.getFriends();
+    }
+
+
 }
