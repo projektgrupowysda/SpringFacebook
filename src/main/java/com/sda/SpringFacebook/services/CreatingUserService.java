@@ -17,14 +17,26 @@ public class CreatingUserService {
     }
 
     public void createPerson(CreateUserRequest request) {
-        User person = User.builder()
-                .login(request.getLogin())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .password(request.getPassword())
-                .friends(request.getFriends())
-                .build();
+        if (checkUserExists(request)) {
+            System.err.println("Jest taki ziomek");
+        } else {
 
-        repository.save(person);
+            User person = User.builder()
+                    .login(request.getLogin())
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .password(request.getPassword())
+                    .friends(request.getFriends())
+                    .build();
+
+            repository.save(person);
+        }
+
+    }
+
+    private boolean checkUserExists(CreateUserRequest request) {
+        return repository.findAll().stream()
+                .map(u -> u.getLogin())
+                .anyMatch(e -> e.equals(request.getLogin()));
     }
 }
