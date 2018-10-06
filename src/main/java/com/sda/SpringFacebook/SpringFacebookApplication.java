@@ -15,6 +15,7 @@ public class SpringFacebookApplication {
 
 		//nwm co sie dzieje
 
+		//ostatni
 
 	}
 }
