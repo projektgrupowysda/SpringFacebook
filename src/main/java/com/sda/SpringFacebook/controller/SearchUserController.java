@@ -21,7 +21,7 @@ public class SearchUserController {
     }
 
     @GetMapping("/all")
-    public Page<User> findByLogin(@PageableDefault(size = 2) Pageable pageable){
+    public Page<User> findByLogin(@PageableDefault(size = 10) Pageable pageable){
         return userRepository.findAll(pageable);
     }
 }

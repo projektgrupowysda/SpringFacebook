@@ -1,9 +1,12 @@
 package com.sda.SpringFacebook.request;
 
+import com.sda.SpringFacebook.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -18,5 +21,7 @@ public class CreateUserRequest {
     private String lastName;
 
     private String password;
+
+    private List<User> friends;
 
 }

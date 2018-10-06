@@ -22,6 +22,7 @@ public class CreatingUserService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .password(request.getPassword())
+                .friends(request.getFriends())
                 .build();
 
         repository.save(person);

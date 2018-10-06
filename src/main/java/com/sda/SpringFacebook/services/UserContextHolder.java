@@ -1,4 +1,4 @@
-package com.sda.SpringFacebook.service;
+package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.model.UserLoggedIn;
