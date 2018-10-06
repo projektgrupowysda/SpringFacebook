@@ -1,14 +1,13 @@
 package com.sda.SpringFacebook.controller;
 
 import com.sda.SpringFacebook.database.UserRepository;
-import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.services.DeleteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
+@RestController
 public class DeleteUserController {
 
     private UserRepository userRepository;
@@ -19,10 +18,10 @@ public class DeleteUserController {
         this.userRepository = userRepository;
         this.deleteUserService = deleteUserService;
     }
+    
+    @PostMapping("/deleteuser")
+    public void deleteUser(@RequestParam String id){
+        deleteUserService.deleteUser(userRepository.findOne(id));
 
-
-    @RequestMapping("/deleteuser")
-    public void deleteUser(User user){
-        deleteUserService.deleteUser(user);
     }
 }
