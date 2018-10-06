@@ -5,6 +5,7 @@ import com.sda.SpringFacebook.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,14 +29,9 @@ public class FriendsImpl implements FriendsService {
             throw new RuntimeException("Nie ma takiego użytkownika");
         }
 
-        List<User> friends = user.getFriends();
-        friends.add(userByIdToAdd);
-
+        user.getFriends().add(userByIdToAdd);
         userRepository.save(user);
-
-        List<User> friends1 = userByIdToAdd.getFriends();
-        friends1.add(user);
-
+        userByIdToAdd.getFriends().add(user);
         userRepository.save(userByIdToAdd);
     }
 
@@ -44,11 +40,15 @@ public class FriendsImpl implements FriendsService {
 
         User user = userRepository.findById(id);
 
-        if(user == null){
+        if (user == null) {
 
             throw new RuntimeException("Brak użytkownika");
         }
 
+        if (user.getFriends().size() == 0) {
+
+            throw new RuntimeException("Brak znajmoeych");
+        }
         return user.getFriends();
     }
 

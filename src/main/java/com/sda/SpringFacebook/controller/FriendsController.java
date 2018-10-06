@@ -17,7 +17,7 @@ public class FriendsController {
         this.friendsService = friendsService;
     }
 
-    @GetMapping("/{userToAddId}/addFriend/{userId}")
+    @GetMapping("/{userId}/addFriend/{userToAddId}")
     public void addToFriend(@PathVariable String userToAddId, @PathVariable String userId) {
 
         friendsService.addToFriends(userToAddId, userId);
