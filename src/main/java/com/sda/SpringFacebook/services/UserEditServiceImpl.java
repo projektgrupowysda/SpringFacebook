@@ -3,28 +3,28 @@ package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.database.UserRepository;
 import com.sda.SpringFacebook.model.User;
+import com.sda.SpringFacebook.request.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserEditServiceImpl implements UserEditService {
 
-    private UserRepository userRepository;
+    private UserRepository user;
 
     @Autowired
-    public UserEditServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserEditServiceImpl(UserRepository user) {
+        this.user = user;
     }
 
     @Override
-    public void changeUserDataById(User userToChange) {
-        User userChanged;
-        userChanged = userRepository.findById(userToChange.getId());
+    public void changeUserDataById(UpdateUserRequest request, String userId) {
+        User userToChange= user.findById(userId);
 
-        userChanged.setLogin(userChanged.getLogin());
-        userChanged.setFirstName(userChanged.getFirstName());
-        userChanged.setLastName(userChanged.getLastName());
-        userChanged.setPassword(userChanged.getPassword());
+        userToChange.setFirstName(request.getFirstName());
+        userToChange.setLastName(request.getLastName());
+        userToChange.setPassword(request.getPassword());
 
-        userRepository.save(userChanged);
+        user.save(userToChange);
     }
-
 }
