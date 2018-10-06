@@ -19,7 +19,7 @@ public class User {
     private String login;
     private String firstName;
     private String lastName;
-    private String passwordHash;
+    private String password;
 
     private List<User> friends;
 
