@@ -18,11 +18,7 @@ public class DeleteUserController {
         this.userRepository = userRepository;
         this.deleteUserService = deleteUserService;
     }
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
+    
     @PostMapping("/deleteuser")
     public void deleteUser(@RequestParam String id){
         deleteUserService.deleteUser(userRepository.findOne(id));
