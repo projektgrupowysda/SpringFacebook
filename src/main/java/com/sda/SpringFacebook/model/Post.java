@@ -24,6 +24,7 @@ public class Post {
     @Id
     private String id;
     private String postContent;
+    private String userId;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
