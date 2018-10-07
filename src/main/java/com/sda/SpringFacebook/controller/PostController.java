@@ -11,21 +11,28 @@ import java.util.List;
 
 @RestController
 public class PostController {
+
     private PostService postService;
 
     @Autowired
-    public PostController(PostService postService){
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @PostMapping("/createPost")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPost(@RequestBody CreatePostRequest request){
+    public void createPost(@RequestBody CreatePostRequest request) {
         postService.createPost(request);
     }
 
+    @GetMapping("/viewPostsYouAreTheAuthor")
+    public List<Post> viewPostsYouAreTheAuthor() {
+        return postService.viewPostsYouAreTheAuthor();
+    }
+
     @GetMapping("/viewAllPosts")
-    public List<Post> viewPosts(){
-        return postService.viewAllByUserId();
+    public List<Post> viewAllPosts() {
+
+       return postService.viewAllPublicPostAndAllPostFriends();
     }
 }
