@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarejestruj się. - Facebooq</title>
+</head>
+<body>
+<h1>Facebooq</h1>
+<hr>
+<p>Rejestracja:</p>
+
+<form action="/create" method="post">
+    Login:<br>
+    <input id="login" type="text" name="login">
+    <br>
+    Hasło:<br>
+    <input id="password" type="text" name="password">
+    <br>
+    Imię:<br>
+    <input id="firstname" type="text" name="firstname">
+    <br>
+    Nazwisko:<br>
+    <input id="lastname" type="text" name="lastname">
+    <br>
+    <input type="submit" value="Zarejestruj">
+</form>
+
+<script language="javascript">
+    var user = {"login":"","password":"","firstName":"","lastName":""}
+    function myFunction() {
+        user.login = document.getElementById("login").value;
+        user.password = document.getElementById("password").value;
+        user.firstName = document.getElementById("firstname").value;
+        user.lastName = document.getElementById("lastname").value;
+
+        document.write("<t1>"+user.login+"<br>"+user.password+"<br>"
+            +user.firstName+"<br>"+user.lastName+"<br></t1>")
+    }
+
+</script>
+<button onclick="myFunction()">Zarejestruj</button>
+</body>
+</html>
