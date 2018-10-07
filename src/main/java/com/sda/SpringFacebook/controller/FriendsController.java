@@ -14,6 +14,7 @@ public class FriendsController {
 
     @Autowired
     public FriendsController(FriendsService friendsService) {
+
         this.friendsService = friendsService;
     }
 
@@ -28,4 +29,13 @@ public class FriendsController {
 
         return friendsService.getAllFriends(id);
     }
+
+    @GetMapping("/{userId}/removeFriend/{userToDelId}")
+    public void removeFriend(@PathVariable String userId, @PathVariable String userToDelId) {
+
+        friendsService.removeFriend(userId, userToDelId);
+    }
+
+
+
 }
