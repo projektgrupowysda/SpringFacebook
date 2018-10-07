@@ -38,6 +38,30 @@ public class FriendsImpl implements FriendsService {
     }
 
     @Override
+    public void removeFriend(String userId, String userToDelId) {
+
+        User user = userRepository.findById(userId);
+        User userToDel = userRepository.findById(userToDelId);
+
+        if (user == null && userToDel == null ){
+            throw new RuntimeException("Nie ma takich użytkowników o id :" + userId + " oraz " + userToDelId);
+        }else if (userToDel == null){
+            throw new RuntimeException("Nie ma użytkownika o id: " + userToDelId);
+        }else if (user == null){
+            throw new RuntimeException("Nie ma użytkownika o id: " + userId);
+        }
+
+        if (user.getFriends()==null || user.getFriends().isEmpty()){
+            throw new RuntimeException(user.getFirstName() + ". Ty Nie masz żadnych znajomych.");
+        }
+
+        user.getFriends().remove(userToDel.getId());
+        userRepository.save(user);
+        userToDel.getFriends().remove(user.getId());
+        userRepository.save(userToDel);
+    }
+
+    @Override
     public List<User> getAllFriends(String id) {
 
         User user = userRepository.findById(id);
