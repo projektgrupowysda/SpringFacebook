@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendsImpl implements FriendsService {
@@ -29,9 +30,10 @@ public class FriendsImpl implements FriendsService {
             throw new RuntimeException("Nie ma takiego użytkownika");
         }
 
-        user.getFriends().add(userByIdToAdd);
+        user.getFriends().add(userByIdToAdd.getId());
         userRepository.save(user);
-        userByIdToAdd.getFriends().add(user);
+
+        userByIdToAdd.getFriends().add(user.getId());
         userRepository.save(userByIdToAdd);
     }
 
@@ -45,11 +47,15 @@ public class FriendsImpl implements FriendsService {
             throw new RuntimeException("Brak użytkownika");
         }
 
-        if (user.getFriends().size() == 0) {
+        if (user.getFriends().isEmpty()) {
 
             throw new RuntimeException("Brak znajmoeych");
         }
-        return user.getFriends();
+
+       return user.getFriends().stream()
+                .map(userId -> userRepository.findById(userId))
+                .collect(Collectors.toList());
+
     }
 
 

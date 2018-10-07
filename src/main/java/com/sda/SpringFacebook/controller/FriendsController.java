@@ -23,7 +23,7 @@ public class FriendsController {
         friendsService.addToFriends(userToAddId, userId);
     }
 
-    @GetMapping("/{id}/howAllFriends")
+    @GetMapping("/{id}/showAllFriends")
     public List<User> getAllFriends(@PathVariable String id) {
 
         return friendsService.getAllFriends(id);

@@ -22,6 +22,6 @@ public class CreateUserRequest {
 
     private String password;
 
-    private List<User> friends;
+    private List<String> friends;
 
 }
