@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -60,6 +62,18 @@ public class UserServiceImpl implements UserService {
         userToChange.setPassword(request.getPassword());
 
         repository.save(userToChange);
+    }
+
+    @Override
+    public Page<User> getAllByPhrase(String phrase, Pageable pageable) {
+        Page<User> users = repository.findAllByLoginIgnoreCaseLikeOrFirstNameIgnoreCaseLikeOrLastNameIgnoreCaseLike(phrase,phrase,phrase,pageable);
+
+        if (users==null || users.getContent().isEmpty() ){
+            throw new RuntimeException("Nie znaleziono żadnego użytkownika zawierającego \""+
+                    phrase + "\" w loginie, imieniu lub nazwisku");
+        }
+
+        return users;
     }
 
 }

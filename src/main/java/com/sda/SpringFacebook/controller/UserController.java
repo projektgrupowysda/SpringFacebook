@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 public class UserController {
 
@@ -44,4 +45,12 @@ public class UserController {
     public Page<User> findByLogin(@PageableDefault(size = 10) Pageable pageable){
         return userService.getAllUsers(pageable);
     }
+
+    @GetMapping("/search/{phrase}")
+    public Page<User> findByPhrase (@PathVariable String phrase,
+                                    @PageableDefault(size = 10) Pageable pageable){
+        return userService.getAllByPhrase(phrase, pageable);
+    }
+
+
 }
