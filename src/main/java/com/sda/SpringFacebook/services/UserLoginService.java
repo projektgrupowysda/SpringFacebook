@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserLoginService {
+
     private UserRepository userRepository;
 
     @Autowired
@@ -16,15 +17,17 @@ public class UserLoginService {
     }
 
     public void loginUser(UserLoginRequest request) {
-        User user = userRepository.findAll().stream()
+
+        User user = userRepository.findAll()
+                .stream()
                 .filter(u -> u.getLogin().equalsIgnoreCase(request.getLogin().trim()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Użytkownik: " + request.getLogin() + " nie istnieje"));
 
         if (passwordIsNotCorrect(request, user)) {
+
             throw new RuntimeException("Podane hasło jest nieprawidłowe");
         }
-
 
         UserContextHolder.logInUser(user);
     }
