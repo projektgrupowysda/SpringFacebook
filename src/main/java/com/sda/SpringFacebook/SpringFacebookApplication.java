@@ -8,8 +8,5 @@ public class SpringFacebookApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringFacebookApplication.class, args);
-
-
-		// Michał
 	}
 }
