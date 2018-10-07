@@ -3,16 +3,19 @@ package com.sda.SpringFacebook.services;
 import com.sda.SpringFacebook.database.UserRepository;
 import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.request.CreateUserRequest;
+import com.sda.SpringFacebook.request.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreatingUserService {
+public class UserServiceImpl implements UserService {
 
     private UserRepository repository;
 
     @Autowired
-    public CreatingUserService(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -39,4 +42,24 @@ public class CreatingUserService {
                 .map(u -> u.getLogin())
                 .anyMatch(e -> e.equals(request.getLogin()));
     }
+
+
+    public void deleteUser(User user){
+        repository.delete(user);
+    }
+
+    public Page<User> getAllUsers(Pageable pageable){
+        return repository.findAll(pageable);
+    }
+
+    public void changeUserDataById(UpdateUserRequest request, String userId) {
+        User userToChange= repository.findById(userId);
+
+        userToChange.setFirstName(request.getFirstName());
+        userToChange.setLastName(request.getLastName());
+        userToChange.setPassword(request.getPassword());
+
+        repository.save(userToChange);
+    }
+
 }

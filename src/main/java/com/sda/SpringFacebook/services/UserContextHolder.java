@@ -4,6 +4,7 @@ import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.model.UserLoggedIn;
 
 public class UserContextHolder {
+
     private static UserLoggedIn userLoggedIn;
 
     public static void logInUser(User user){
