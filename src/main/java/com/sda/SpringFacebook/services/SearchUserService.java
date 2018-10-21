@@ -12,7 +12,6 @@ public class SearchUserService {
     private UserRepository userRepository;
 
     @Autowired
-
     public SearchUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
