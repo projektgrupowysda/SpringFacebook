@@ -45,6 +45,11 @@ public class EventServiceImp implements EventService {
     }
 
     @Override
+    public void deleteEvent(Event event) {
+        eventRepository.delete(event);
+    }
+
+    @Override
     public void addToGuestsList(String idEvent, String userToAddId) {
 
         User userByIdToAdd = userRepository.findById(userToAddId);

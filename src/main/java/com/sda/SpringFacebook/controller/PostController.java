@@ -1,5 +1,6 @@
 package com.sda.SpringFacebook.controller;
 
+import com.sda.SpringFacebook.database.PostRepository;
 import com.sda.SpringFacebook.model.Post;
 import com.sda.SpringFacebook.request.CreatePostRequest;
 import com.sda.SpringFacebook.services.PostService;
@@ -13,10 +14,12 @@ import java.util.List;
 public class PostController {
 
     private PostService postService;
+    private PostRepository postRepository;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostRepository postRepository) {
         this.postService = postService;
+        this.postRepository = postRepository;
     }
 
     @PostMapping("/createPost")
@@ -34,5 +37,9 @@ public class PostController {
     public List<Post> viewAllPosts() {
 
        return postService.viewAllPublicPostAndAllPostFriends();
+    }
+    @PostMapping("/deletePost")
+    public void deletePost(@RequestParam String id){
+        postService.deletePost(postRepository.findOne(id));
     }
 }
