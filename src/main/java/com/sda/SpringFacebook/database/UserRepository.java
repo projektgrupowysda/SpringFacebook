@@ -10,12 +10,12 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Page<User> findAll(Pageable pageable);
 
-    User findById (String id);
+    User findById(String id);
 
-    Page<User> findAllByLoginIgnoreCaseLikeOrFirstNameIgnoreCaseLikeOrLastNameIgnoreCaseLike (String phraseLogin,
-                                                                String phraseFirstName,
-                                                                String phraseLastName,
-                                                                Pageable pageable);
+    Page<User> findAllByLoginIgnoreCaseLikeOrFirstNameIgnoreCaseLikeOrLastNameIgnoreCaseLike(String phraseLogin,
+                                                                                             String phraseFirstName,
+                                                                                             String phraseLastName,
+                                                                                             Pageable pageable);
 
 
 }
