@@ -1,5 +1,7 @@
 package com.sda.SpringFacebook.security;
 
+import com.sda.SpringFacebook.database.UserRepository;
+import com.sda.SpringFacebook.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +17,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authEntryPoint;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
@@ -25,10 +30,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("jarek@wp.pl")
-                .password("1234abcd")
-                .roles("USER");
+
+        for (User user : userRepository.findAll()) {
+            auth.inMemoryAuthentication().withUser(user.getLogin()).password(user.getPassword()).roles("USER");
+        }
+        
+//        auth.inMemoryAuthentication().withUser("jarek@wp.pl").password("1234abcd").roles("USER");
     }
 
 }
