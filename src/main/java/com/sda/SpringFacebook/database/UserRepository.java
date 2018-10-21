@@ -16,6 +16,6 @@ public interface UserRepository extends MongoRepository<User, String> {
                                                                                              String phraseFirstName,
                                                                                              String phraseLastName,
                                                                                              Pageable pageable);
-
+    User findUsersByLogin(String login);
 
 }
