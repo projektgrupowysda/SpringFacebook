@@ -41,4 +41,10 @@ public class SpringFacebookExeptionHandler extends ResponseEntityExceptionHandle
         return handleExceptionInternal(e, e.getMessage(), null, HttpStatus.NOT_FOUND, webRequest);
     }
 
+    @ExceptionHandler(value = NoAccessToThisOperationException.class)
+    public ResponseEntity<Object> handleUNoAccessToThisOperationException(WebRequest webRequest, NoAccessToThisOperationException e) {
+
+        return handleExceptionInternal(e, e.getMessage(), null, HttpStatus.NOT_FOUND, webRequest);
+    }
+
 }

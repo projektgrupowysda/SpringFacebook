@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -41,5 +42,6 @@ public class Post {
     private RangeOfPost rangeOfPost;
 
     private Integer likeCounter;
+    private Set<String> usersWhoLiked;
 
 }

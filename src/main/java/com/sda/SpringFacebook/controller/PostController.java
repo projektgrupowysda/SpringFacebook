@@ -37,9 +37,9 @@ public class PostController {
         return postService.viewAllPublicPostAndAllPostFriends();
     }
 
-    @PostMapping("/post/{postId}/addLike")
-    public void addLike(@PathVariable String postId){
-        postService.addLike(postId);
+    @PostMapping("/user/{userId}/post/{postId}/addLike")
+    public void addLike(@PathVariable String postId, @PathVariable String userId){
+        postService.addLike(postId, userId);
     }
 
     @PutMapping("/post/{postId}/editPost")

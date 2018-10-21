@@ -3,6 +3,7 @@ package com.sda.SpringFacebook.services;
 import com.sda.SpringFacebook.database.PostRepository;
 import com.sda.SpringFacebook.database.UserRepository;
 import com.sda.SpringFacebook.enums.RangeOfPost;
+import com.sda.SpringFacebook.exceptions.NoAccessToThisOperationException;
 import com.sda.SpringFacebook.exceptions.PostNotExistException;
 import com.sda.SpringFacebook.exceptions.UserNotExistException;
 import com.sda.SpringFacebook.model.Post;
@@ -55,48 +56,48 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> viewAllPublicPostAndAllPostFriends() {
 
-        User user = getUserLoggedInFromRepository();
-
-        List<Post> publicPosts = postRepository.findAllByRangeOfPost(RangeOfPost.PUBLIC);
-
-        Map<String, Post> usersPrivatePosts = postRepository.findAllByRangeOfPost(RangeOfPost.PRIVATE)
-                .stream()
-                .collect(Collectors.toMap(Post::getUserId, p -> p));
-
-        List<Post> collect = user.getFriends()
-                .stream()
-                .filter(usersPrivatePosts::containsKey)
-                .map(usersPrivatePosts::get)
-                .collect(Collectors.toList());
-
-        collect.addAll(publicPosts);
-        return collect;
+        return takeAllPostsAvailableForUser();
 
     }
 
     @Override
     public void deletePost(String id) {
 
+        User user = getUserLoggedInFromRepository();
+        Post byId = postRepository.findById(id);
+
+        if(byId == null){
+
+            throw new PostNotExistException("Post nie istnieje");
+        }
+        if(!user.getId().equals(byId.getUserId())){
+            throw new NoAccessToThisOperationException("Nie masz uprwnień");
+        }
         postRepository.delete(id);
     }
 
     @Override
-    public void addLike(String id) {
+    public void addLike(String postId, String id) {
 
-        Post post = checkIfUserExist(id);
+        Post post = checkIfPostExist(postId);
+
+        if(post.getUsersWhoLiked().contains(id)){
+            throw new NoAccessToThisOperationException("Nie masz uprwnień");
+        }
         post.setLikeCounter(post.getLikeCounter() + 1);
+        post.getUsersWhoLiked().add(id);
         postRepository.save(post);
     }
 
     @Override
     public void editPost(String id, String content) {
 
-        Post post = checkIfUserExist(id);
+        Post post = checkIfPostExist(id);
         post.setPostContent(content);
         postRepository.save(post);
     }
 
-    private Post checkIfUserExist(String id) {
+    private Post checkIfPostExist(String id) {
 
         Post postById = postRepository.findById(id);
         if (postById == null) {
@@ -114,5 +115,24 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new UserNotExistException("Użytkownik " + UserContextHolder.getUserLoggedIn() + " nie istnieje"));
     }
 
+
+    private List<Post> takeAllPostsAvailableForUser() {
+        User user = getUserLoggedInFromRepository();
+
+        List<Post> publicPosts = postRepository.findAllByRangeOfPost(RangeOfPost.PUBLIC);
+
+        Map<String, Post> usersPrivatePosts = postRepository.findAllByRangeOfPost(RangeOfPost.PRIVATE)
+                .stream()
+                .collect(Collectors.toMap(Post::getUserId, p -> p));
+
+        List<Post> collect = user.getFriends()
+                .stream()
+                .filter(usersPrivatePosts::containsKey)
+                .map(usersPrivatePosts::get)
+                .collect(Collectors.toList());
+
+        collect.addAll(publicPosts);
+        return collect;
+    }
 
 }
