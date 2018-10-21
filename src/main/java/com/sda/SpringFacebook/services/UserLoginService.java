@@ -35,6 +35,6 @@ public class UserLoginService {
     }
 
     private boolean passwordIsNotCorrect(UserLoginRequest request, User user) {
-        return !user.getLogin().equals(request.getLogin());
+        return !user.getPassword().equals(request.getPassword());
     }
 }
