@@ -3,6 +3,8 @@ package com.sda.SpringFacebook.services;
 import com.sda.SpringFacebook.database.PostRepository;
 import com.sda.SpringFacebook.database.UserRepository;
 import com.sda.SpringFacebook.enums.RangeOfPost;
+import com.sda.SpringFacebook.exceptions.PostNotExistException;
+import com.sda.SpringFacebook.exceptions.UserNotExistException;
 import com.sda.SpringFacebook.model.Post;
 import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.request.CreatePostRequest;
@@ -37,6 +39,7 @@ public class PostServiceImpl implements PostService {
                 .date(LocalDate.now())
                 .time(LocalTime.now())
                 .rangeOfPost(request.getRangeOfPost())
+                .likeCounter(0)
                 .build();
 
         postRepository.save(post);
@@ -71,12 +74,38 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public void addLike(String id) {
+
+        Post post = checkIfUserExist(id);
+        post.setLikeCounter(post.getLikeCounter() + 1);
+        postRepository.save(post);
+    }
+
+    @Override
+    public void editPost(String id, String content) {
+
+        Post post = checkIfUserExist(id);
+        post.setPostContent(content);
+        postRepository.save(post);
+    }
+
+    private Post checkIfUserExist(String id) {
+
+        Post postById = postRepository.findById(id);
+        if (postById == null) {
+
+            throw new PostNotExistException("Post o podanym id nie istnieje");
+        }
+        return postById;
+    }
+
     private User getUserLoggedInFromRepository() {
 
         return userRepository.findAll().stream()
                 .filter(u -> u.getLogin().equalsIgnoreCase(UserContextHolder.getUserLoggedIn()))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Użytkownik " + UserContextHolder.getUserLoggedIn() + " nie istnieje"));
+                .orElseThrow(() -> new UserNotExistException("Użytkownik " + UserContextHolder.getUserLoggedIn() + " nie istnieje"));
     }
 
 

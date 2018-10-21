@@ -1,11 +1,12 @@
 package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.database.UserRepository;
+import com.sda.SpringFacebook.exceptions.FriendlessPersonException;
+import com.sda.SpringFacebook.exceptions.UserNotExistException;
 import com.sda.SpringFacebook.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,16 +44,12 @@ public class FriendsImpl implements FriendsService {
         User user = userRepository.findById(userId);
         User userToDel = userRepository.findById(userToDelId);
 
-        if (user == null && userToDel == null ){
-            throw new RuntimeException("Nie ma takich użytkowników o id :" + userId + " oraz " + userToDelId);
-        }else if (userToDel == null){
-            throw new RuntimeException("Nie ma użytkownika o id: " + userToDelId);
-        }else if (user == null){
-            throw new RuntimeException("Nie ma użytkownika o id: " + userId);
+        if (user == null || userToDel == null ){
+            throw new UserNotExistException("Uzytkownik nie istnieje");
         }
 
         if (user.getFriends()==null || user.getFriends().isEmpty()){
-            throw new RuntimeException(user.getFirstName() + ". Ty Nie masz żadnych znajomych.");
+            throw new FriendlessPersonException(user.getFirstName() + ". Ty Nie masz żadnych znajomych.");
         }
 
         user.getFriends().remove(userToDel.getId());
@@ -68,12 +65,12 @@ public class FriendsImpl implements FriendsService {
 
         if (user == null) {
 
-            throw new RuntimeException("Brak użytkownika");
+            throw new UserNotExistException("Brak użytkownika");
         }
 
-        if (user.getFriends().isEmpty()) {
+        if (user.getFriends()==null || user.getFriends().isEmpty()) {
 
-            throw new RuntimeException("Brak znajmoeych");
+            throw new FriendlessPersonException("Brak znajmoeych");
         }
 
        return user.getFriends().stream()

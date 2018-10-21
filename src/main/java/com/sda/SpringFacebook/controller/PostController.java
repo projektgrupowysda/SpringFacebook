@@ -33,6 +33,19 @@ public class PostController {
     @GetMapping("/viewAllPosts")
     public List<Post> viewAllPosts() {
 
-       return postService.viewAllPublicPostAndAllPostFriends();
+        return postService.viewAllPublicPostAndAllPostFriends();
     }
+
+    @PostMapping("/post/{postId}/addLike")
+    public void addLike(@PathVariable String postId){
+        postService.addLike(postId);
+    }
+
+    @PutMapping("/post/{postId}/editPost")
+    public void editPost(@PathVariable String postId, @RequestBody String context){
+
+        postService.editPost(postId, context);
+    }
+
+
 }

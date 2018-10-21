@@ -2,6 +2,8 @@ package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.database.EventRepository;
 import com.sda.SpringFacebook.database.UserRepository;
+import com.sda.SpringFacebook.exceptions.EventNotExistException;
+import com.sda.SpringFacebook.exceptions.UserNotExistException;
 import com.sda.SpringFacebook.model.Event;
 import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.request.CreateEventRequest;
@@ -52,11 +54,11 @@ public class EventServiceImp implements EventService {
 
         if (userByIdToAdd == null) {
 
-            throw new RuntimeException("Nie ma takiego użytkownika");
+            throw new UserNotExistException("Nie ma takiego użytkownika");
         }
         if (event == null) {
 
-            throw new RuntimeException("Nie ma takiego wydarzenia");
+            throw new EventNotExistException("Nie ma takiego wydarzenia");
         }
 
         event.getGuests().add(userByIdToAdd.getId());
@@ -67,6 +69,6 @@ public class EventServiceImp implements EventService {
         return userRepository.findAll().stream()
                 .filter(u -> u.getLogin().equalsIgnoreCase(UserContextHolder.getUserLoggedIn()))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Użytkownik " + UserContextHolder.getUserLoggedIn() + " nie istnieje"));
+                .orElseThrow(() -> new UserNotExistException("Użytkownik " + UserContextHolder.getUserLoggedIn() + " nie istnieje"));
     }
 }

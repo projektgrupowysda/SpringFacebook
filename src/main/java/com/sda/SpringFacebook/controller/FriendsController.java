@@ -18,7 +18,7 @@ public class FriendsController {
         this.friendsService = friendsService;
     }
 
-    @GetMapping("/{userId}/addFriend/{userToAddId}")
+    @PutMapping("/{userId}/addFriend/{userToAddId}")
     public void addToFriend(@PathVariable String userToAddId, @PathVariable String userId) {
 
         friendsService.addToFriends(userToAddId, userId);
@@ -30,7 +30,7 @@ public class FriendsController {
         return friendsService.getAllFriends(id);
     }
 
-    @GetMapping("/{userId}/removeFriend/{userToDelId}")
+    @DeleteMapping("/{userId}/removeFriend/{userToDelId}")
     public void removeFriend(@PathVariable String userId, @PathVariable String userToDelId) {
 
         friendsService.removeFriend(userId, userToDelId);

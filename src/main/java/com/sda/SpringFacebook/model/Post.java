@@ -40,4 +40,6 @@ public class Post {
 
     private RangeOfPost rangeOfPost;
 
+    private Integer likeCounter;
+
 }

@@ -13,4 +13,8 @@ public interface PostService {
 
     List<Post> viewAllPublicPostAndAllPostFriends();
 
+    void addLike(String id);
+
+    void editPost(String id, String content);
+
 }

@@ -1,6 +1,7 @@
 package com.sda.SpringFacebook.services;
 
 import com.sda.SpringFacebook.database.UserRepository;
+import com.sda.SpringFacebook.exceptions.PhraseNotCorrectException;
 import com.sda.SpringFacebook.model.User;
 import com.sda.SpringFacebook.request.CreateUserRequest;
 import com.sda.SpringFacebook.request.UpdateUserRequest;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         Page<User> users = repository.findAllByLoginIgnoreCaseLikeOrFirstNameIgnoreCaseLikeOrLastNameIgnoreCaseLike(phrase,phrase,phrase,pageable);
 
         if (users==null || users.getContent().isEmpty() ){
-            throw new RuntimeException("Nie znaleziono żadnego użytkownika zawierającego \""+
+            throw new PhraseNotCorrectException("Nie znaleziono żadnego użytkownika zawierającego \""+
                     phrase + "\" w loginie, imieniu lub nazwisku");
         }
 
