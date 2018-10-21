@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class PostServiceImpl implements PostService {
                 .date(LocalDate.now())
                 .time(LocalTime.now())
                 .rangeOfPost(request.getRangeOfPost())
-                .likeCounter(0)
+                .like(new HashSet<>())
                 .build();
 
         postRepository.save(post);
@@ -66,11 +67,11 @@ public class PostServiceImpl implements PostService {
         User user = getUserLoggedInFromRepository();
         Post byId = postRepository.findById(id);
 
-        if(byId == null){
+        if (byId == null) {
 
             throw new PostNotExistException("Post nie istnieje");
         }
-        if(!user.getId().equals(byId.getUserId())){
+        if (!user.getId().equals(byId.getUserId())) {
             throw new NoAccessToThisOperationException("Nie masz uprwnień");
         }
         postRepository.delete(id);
@@ -80,12 +81,7 @@ public class PostServiceImpl implements PostService {
     public void addLike(String postId, String id) {
 
         Post post = checkIfPostExist(postId);
-
-        if(post.getUsersWhoLiked().contains(id)){
-            throw new NoAccessToThisOperationException("Nie masz uprwnień");
-        }
-        post.setLikeCounter(post.getLikeCounter() + 1);
-        post.getUsersWhoLiked().add(id);
+        post.getLike().add(id);
         postRepository.save(post);
     }
 

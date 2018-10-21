@@ -41,7 +41,9 @@ public class Post {
 
     private RangeOfPost rangeOfPost;
 
-    private Integer likeCounter;
-    private Set<String> usersWhoLiked;
+//    private Integer likeCounter;
+//    private Set<String> usersWhoLiked;
+
+    private Set<String> like;
 
 }
