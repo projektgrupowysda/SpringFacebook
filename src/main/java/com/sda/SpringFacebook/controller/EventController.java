@@ -11,6 +11,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class EventController {
     private EventService eventService;
@@ -24,7 +26,7 @@ public class EventController {
 
     @PostMapping("/createEvent")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEvent(@RequestBody CreateEventRequest request) {
+    public void createEvent(@RequestBody @Valid CreateEventRequest request) {
         eventService.createEvent(request);
     }
 

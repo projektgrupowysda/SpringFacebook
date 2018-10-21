@@ -11,6 +11,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 public class UserController {
@@ -24,9 +26,10 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPerson(@RequestBody CreateUserRequest request) {
+    public void createPerson(@RequestBody @Valid CreateUserRequest request) {
 
         userService.createPerson(request);
     }
@@ -38,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/edit/{userId}")
-    public void createPerson(@RequestBody UpdateUserRequest request, @PathVariable String userId) {
+    public void createPerson(@RequestBody @Valid UpdateUserRequest request, @PathVariable String userId) {
         userService.changeUserDataById(request, userId);
     }
 

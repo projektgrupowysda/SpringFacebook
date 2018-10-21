@@ -30,7 +30,7 @@ public class FriendsController {
         return friendsService.getAllFriends(id);
     }
 
-    @GetMapping("/{userId}/removeFriend/{userToDelId}")
+    @DeleteMapping("/{userId}/removeFriend/{userToDelId}")
     public void removeFriend(@PathVariable String userId, @PathVariable String userToDelId) {
 
         friendsService.removeFriend(userId, userToDelId);
