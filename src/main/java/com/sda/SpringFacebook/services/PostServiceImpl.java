@@ -71,6 +71,11 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public void deletePost(Post post) {
+        postRepository.delete(post);
+    }
+
     private User getUserLoggedInFromRepository() {
 
         return userRepository.findAll().stream()

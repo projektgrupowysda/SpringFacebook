@@ -1,5 +1,6 @@
 package com.sda.SpringFacebook.controller;
 
+import com.sda.SpringFacebook.database.EventRepository;
 import com.sda.SpringFacebook.model.Event;
 import com.sda.SpringFacebook.request.CreateEventRequest;
 import com.sda.SpringFacebook.services.EventService;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class EventController {
     private EventService eventService;
+    private EventRepository eventRepository;
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, EventRepository eventRepository) {
         this.eventService = eventService;
+        this.eventRepository = eventRepository;
     }
 
     @PostMapping("/createEvent")
@@ -33,5 +36,10 @@ public class EventController {
     @GetMapping("/{idEvent}/addGuest/{userToAddId}")
     public void addToGuestList(@PathVariable String idEvent, @PathVariable String userToAddId) {
         eventService.addToGuestsList(idEvent, userToAddId);
+    }
+
+    @PostMapping("/deleteEvent")
+    public void deleteEvent(@RequestParam String id){
+        eventService.deleteEvent(eventRepository.findById(id));
     }
 }

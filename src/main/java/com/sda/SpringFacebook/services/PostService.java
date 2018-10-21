@@ -13,4 +13,6 @@ public interface PostService {
 
     List<Post> viewAllPublicPostAndAllPostFriends();
 
+    void deletePost(Post post);
+
 }
