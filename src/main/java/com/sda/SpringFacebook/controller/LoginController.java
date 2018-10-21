@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class LoginController {
     private UserLoginService userLoginService;
@@ -17,7 +19,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public void loginUser(@RequestBody UserLoginRequest request){
+    public void loginUser(@RequestBody @Valid UserLoginRequest request){
         userLoginService.loginUser(request);
     }
 

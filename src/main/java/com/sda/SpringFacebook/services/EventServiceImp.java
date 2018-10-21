@@ -25,9 +25,7 @@ public class EventServiceImp implements EventService {
     }
 
     public void createEvent(CreateEventRequest request) {
-
         User user = getUserLoggedInFromRepository();
-
 
         Event event = Event.builder()
                 .range(request.getRange())
@@ -38,7 +36,6 @@ public class EventServiceImp implements EventService {
                 .ownerId(user.getId())
                 .guests(request.getGuests())
                 .build();
-
         eventRepository.save(event);
     }
 
@@ -70,7 +67,7 @@ public class EventServiceImp implements EventService {
         eventRepository.save(event);
     }
 
-    private User getUserLoggedInFromRepository(){
+    private User getUserLoggedInFromRepository() {
         return userRepository.findAll().stream()
                 .filter(u -> u.getLogin().equalsIgnoreCase(UserContextHolder.getUserLoggedIn()))
                 .findFirst()
