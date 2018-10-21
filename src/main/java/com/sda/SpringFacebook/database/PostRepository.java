@@ -12,4 +12,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
     List<Post> findAllByRangeOfPost(Enum rangeOfPost);
 
     List<Post> findAll();
+
+    Post findById(String id);
 }

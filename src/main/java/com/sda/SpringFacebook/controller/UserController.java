@@ -31,13 +31,13 @@ public class UserController {
         userService.createPerson(request);
     }
 
-    @PostMapping("/deleteuser")
+    @DeleteMapping("/deleteuser")
     public void deleteUser(@RequestParam String id){
         userService.deleteUser(userRepository.findOne(id));
 
     }
 
-    @PostMapping("/edit/{userId}")
+    @PutMapping("/edit/{userId}")
     public void createPerson(@RequestBody UpdateUserRequest request, @PathVariable String userId) {
         userService.changeUserDataById(request, userId);
     }

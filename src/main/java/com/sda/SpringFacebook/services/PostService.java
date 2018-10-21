@@ -13,6 +13,10 @@ public interface PostService {
 
     List<Post> viewAllPublicPostAndAllPostFriends();
 
-    void deletePost(Post post);
+    void deletePost(String id);
+
+    void addLike(String id);
+
+    void editPost(String id, String content);
 
 }

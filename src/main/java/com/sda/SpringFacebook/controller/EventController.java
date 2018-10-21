@@ -33,7 +33,7 @@ public class EventController {
         return eventService.findAllEvents(pageable);
     }
 
-    @GetMapping("/{idEvent}/addGuest/{userToAddId}")
+    @PutMapping("/{idEvent}/addGuest/{userToAddId}")
     public void addToGuestList(@PathVariable String idEvent, @PathVariable String userToAddId) {
         eventService.addToGuestsList(idEvent, userToAddId);
     }
